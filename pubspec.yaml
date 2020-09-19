@@ -4,7 +4,7 @@ version: 0.2.3
 homepage: https://github.com/BendixMa/implicitly_animated_reorderable_list/tree/master/example/lib/ui
 
 environment:
-  sdk: ">=2.6.0 <3.0.0"
+  sdk: ">=2.8.0 <3.0.0"
 
 dependencies:
   flutter:

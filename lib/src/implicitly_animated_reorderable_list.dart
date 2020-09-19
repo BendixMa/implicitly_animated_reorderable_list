@@ -8,13 +8,11 @@ import 'src.dart';
 
 typedef ReorderStartedCallback<E> = void Function(E item, int index);
 
-typedef ReorderFinishedCallback<E> = void Function(
-    E item, int from, int to, List<E> newItems);
+typedef ReorderFinishedCallback<E> = void Function(E item, int from, int to, List<E> newItems);
 
 /// A Flutter ListView that implicitly animates between the changes of two lists with
 /// the support to reorder its items.
-class ImplicitlyAnimatedReorderableList<E>
-    extends ImplicitlyAnimatedListBase<Reorderable, E> {
+class ImplicitlyAnimatedReorderableList<E> extends ImplicitlyAnimatedListBase<Reorderable, E> {
   /// Whether the scroll view scrolls in the reading direction.
   ///
   /// Defaults to false.
@@ -185,8 +183,8 @@ class ImplicitlyAnimatedReorderableList<E>
   }
 }
 
-class ImplicitlyAnimatedReorderableListState<E> extends ImplicitlyAnimatedListBaseState<
-    Reorderable, ImplicitlyAnimatedReorderableList<E>, E> {
+class ImplicitlyAnimatedReorderableListState<E>
+    extends ImplicitlyAnimatedListBaseState<Reorderable, ImplicitlyAnimatedReorderableList<E>, E> {
   // The key of the custom scroll view.
   final GlobalKey _listKey = GlobalKey(debugLabel: 'list_key');
   // The key of the draggedItem.
@@ -309,9 +307,9 @@ class ImplicitlyAnimatedReorderableListState<E> extends ImplicitlyAnimatedListBa
     final overscrollBound = _canScroll && !(hasHeader || hasFooter) ? _dragSize : 0;
     // Constrain the dragged item to the bounds of the list.
     final minDelta = (_headerHeight - (dragItem.start + overscrollBound)) - _scrollDelta;
-    final maxDelta = ((_maxScrollOffset + _listSize + overscrollBound) -
-            (dragItem.bottom + _footerHeight)) -
-        _scrollDelta;
+    final maxDelta =
+        ((_maxScrollOffset + _listSize + overscrollBound) - (dragItem.bottom + _footerHeight)) -
+            _scrollDelta;
 
     _pointerDelta = delta.clamp(minDelta, maxDelta);
     _dragDelta = _pointerDelta + _scrollDelta;
@@ -685,7 +683,7 @@ class ImplicitlyAnimatedReorderableListState<E> extends ImplicitlyAnimatedListBa
     );
 
     return Stack(
-      overflow: Overflow.visible,
+      clipBehavior: Clip.none,
       children: <Widget>[
         scrollView,
         if (_dragWidget != null) _buildDraggedItem(),
@@ -803,9 +801,8 @@ class _Item extends Rect implements Comparable<_Item> {
   double distance;
 
   @override
-  int compareTo(_Item other) => distance != null && other.distance != null
-      ? distance.compareTo(other.distance)
-      : -1;
+  int compareTo(_Item other) =>
+      distance != null && other.distance != null ? distance.compareTo(other.distance) : -1;
 
   @override
   String toString() => '_Item key: $key, index: $index';
