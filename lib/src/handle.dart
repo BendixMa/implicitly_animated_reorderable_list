@@ -28,6 +28,9 @@ class Handle extends StatefulWidget {
 
   /// Whether to vibrate when a drag has been initiated.
   final bool vibrate;
+  
+  /// True if this item is draggable.
+  final bool draggable;
 
   /// Creates a widget that can initiate a drag/reorder of an item inside an
   /// [ImplicitlyAnimatedReorderableList].
@@ -39,9 +42,11 @@ class Handle extends StatefulWidget {
     @required this.child,
     this.delay = Duration.zero,
     this.vibrate = true,
+	this.draggable = true,
   })  : assert(delay != null),
         assert(child != null),
         assert(vibrate != null),
+		assert(draggable != null),
         super(key: key);
 
   @override
@@ -154,7 +159,7 @@ class _HandleState extends State<Handle> {
 
         // Ensure the list is not already in a reordering
         // state when initiating a new reorder operation.
-        if (!_inDrag) {
+        if (!_inDrag && draggable) {
           _cancelReorder();
 
           _addScrollListener();
