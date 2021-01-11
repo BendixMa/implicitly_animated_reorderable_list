@@ -113,6 +113,12 @@ class ImplicitlyAnimatedReorderableList<E>
   /// list in another `Scrollable` and thereby loose out
   /// on performance and autoscrolling.
   final Widget footer;
+  
+  /// If that index is greater than -1, the user won't be allowed to drop the dragged element before that index.
+  final int indexLimitMin;
+  
+  /// If that index is greater than -1, the user won't be allowed to drop the dragged element after that index.
+  final int indexLimitMax;
 
   /// Creates a Flutter ListView that implicitly animates between the changes of two lists with
   /// the support to reorder its items.
@@ -158,6 +164,8 @@ class ImplicitlyAnimatedReorderableList<E>
     @required this.onReorderFinished,
     this.header,
     this.footer,
+	this.indexLimitMin,
+	this.indexLimitMax,
   })  : assert(onReorderFinished != null),
         assert(
           dragDuration <= const Duration(milliseconds: 1500),
@@ -340,6 +348,9 @@ class ImplicitlyAnimatedReorderableListState<E>
       final index = item.index;
       final itemStart = item.start + translation;
       final itemEnd = item.end + translation;
+	  
+	  if (index < widget.indexLimitMin) continue;
+	  if (widget.indexLimitMax > -1 && index > widget.indexLimitMax) continue;
 
       if (index < _dragIndex) {
         if (itemStart >= _dragStart && translation == 0) {
