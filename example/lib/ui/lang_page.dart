@@ -167,6 +167,8 @@ class _LanguagePageState extends State<LanguagePage> with SingleTickerProviderSt
         padding: const EdgeInsets.symmetric(horizontal: 24),
         scrollDirection: Axis.horizontal,
         areItemsTheSame: (oldItem, newItem) => oldItem == newItem,
+        insertDuration: const Duration(milliseconds: 1000),
+        removeDuration: const Duration(milliseconds: 1000),
         onReorderStarted: (item, index) => setState(() => inReorder = true),
         onReorderFinished: (item, from, to, newItems) => onReorderFinished(newItems),
         itemBuilder: (context, itemAnimation, item, index) {
@@ -176,7 +178,7 @@ class _LanguagePageState extends State<LanguagePage> with SingleTickerProviderSt
               final t = dragAnimation.value;
               final box = _buildBox(item, t);
 
-              return SizeFadeTransition(
+              return SizeFlipTransition(
                 animation: itemAnimation,
                 axis: Axis.horizontal,
                 axisAlignment: 1.0,

@@ -70,7 +70,7 @@ packages:
   implicitly_animated_reorderable_list:
     dependency: "direct main"
     description:
-      path: ".."
+      path: "../../implicitly_animated_reorderable_list"
       relative: true
     source: path
     version: "0.4.0-dev+3"
